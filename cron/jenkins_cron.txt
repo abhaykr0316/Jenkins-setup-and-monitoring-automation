@@ -1,0 +1,1 @@
+*/5 * * * * /home/ubuntu/check_jenkins.sh >> /var/log/jenkins_monitor.log 2>&1
