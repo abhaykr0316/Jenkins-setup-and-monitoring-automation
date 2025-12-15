@@ -1,4 +1,0 @@
-*.log
-*.retry
-*.pem
-.env
