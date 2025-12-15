@@ -1,8 +1,8 @@
 [ec2]
-ansible-target1 ansible_host=98.92.83.14
-ansible-target2 ansible_host=13.219.182.60
+ansible-target1 ansible_host=<IP_Address_of_host>
+ansible-target2 ansible_host=<IP_Address_of_host>
 
 [ec2:vars]
 ansible_user=ubuntu
-ansible_ssh_private_key_file=~/ansiblekey.pem
+ansible_ssh_private_key_file=~/ansible-key.pem
 ansible_python_interpreter=/usr/bin/python3.12
