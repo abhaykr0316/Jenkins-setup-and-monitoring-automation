@@ -1,0 +1,1 @@
+ubuntu ALL=NOPASSWD: /bin/systemctl restart jenkins, /bin/systemctl status jenkins
