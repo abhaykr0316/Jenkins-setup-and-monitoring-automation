@@ -1,6 +1,6 @@
 #!/bin/bash
 SERVICE="jenkins"
-EMAIL="abhaykrchoudhary302@gmail.com"
+EMAIL="test@mail.com"
 DATE=$(date)
 if systemctl is-active --quiet $SERVICE; then
    echo "$DATE: $SERVICE is running"
