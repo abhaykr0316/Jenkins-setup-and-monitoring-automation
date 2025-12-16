@@ -2,45 +2,48 @@ pipeline {
     agent any
 
     environment {
-        INVENTORY = "ansible/inventory.txt"
+        CONTROLLER = "ubuntu@<ANSIBLE_CONTROLLER_PRIVATE_IP>"
+        PROJECT_DIR = "/home/ubuntu/test-project"
     }
 
     stages {
 
-        stage('Verify Connectivity') {
+        stage('Verify Connectivity from Controller') {
             steps {
-                sh '''
-                ansible ec2 -i $INVENTORY -m ping
-                '''
+                sh """
+                ssh ${CONTROLLER} \
+                'cd ${PROJECT_DIR} && ansible ec2 -i inventory.txt -m ping'
+                """
             }
         }
 
-        stage('Check Jenkins Status') {
+        stage('Check Jenkins Status from Controller') {
             steps {
-                sh '''
-                ansible ec2 -i $INVENTORY -m shell -a "systemctl is-active jenkins"
-                '''
-                }
-
+                sh """
+                ssh ${CONTROLLER} \
+                'cd ${PROJECT_DIR} && ansible ec2 -i inventory.txt -m shell -a "systemctl is-active jenkins"'
+                """
+            }
         }
 
         stage('System Health Check') {
             steps {
-                sh '''
-                ansible ec2 -i $INVENTORY -m shell -a "df -h"
-                ansible ec2 -i $INVENTORY -m shell -a "uptime"
-                '''
+                sh """
+                ssh ${CONTROLLER} \
+                'cd ${PROJECT_DIR} && ansible ec2 -i inventory.txt -m shell -a "df -h"'
+                ssh ${CONTROLLER} \
+                'cd ${PROJECT_DIR} && ansible ec2 -i inventory.txt -m shell -a "uptime"'
+                """
             }
         }
-
     }
 
     post {
         success {
-            echo "Jenkins Monitoring Pipeline Successful"
+            echo "✅ Jenkins used Ansible from Controller successfully"
         }
         failure {
-            echo "Jenkins Monitoring Pipeline Failed"
+            echo "❌ Jenkins → Controller → Ansible flow failed"
         }
     }
 }
