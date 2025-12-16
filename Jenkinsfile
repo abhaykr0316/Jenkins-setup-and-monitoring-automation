@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        CONTROLLER = "ubuntu@<ANSIBLE_CONTROLLER_PRIVATE_IP>"
+        CONTROLLER = "ubuntu@Î172.31.75.15"
         PROJECT_DIR = "/home/ubuntu/test-project"
     }
 
