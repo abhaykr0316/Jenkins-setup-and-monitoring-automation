@@ -4,6 +4,7 @@ pipeline {
     environment {
         CONTROLLER = "ubuntu@Î172.31.75.15"
         PROJECT_DIR = "/home/ubuntu/test-project"
+       
     }
 
     stages {
@@ -11,7 +12,7 @@ pipeline {
         stage('Verify Connectivity from Controller') {
             steps {
                 sh """
-                ssh ${CONTROLLER} \
+                ssh -o StrictHostKeyChecking=no ${CONTROLLER} \
                 'cd ${PROJECT_DIR} && ansible ec2 -i inventory.txt -m ping'
                 """
             }
